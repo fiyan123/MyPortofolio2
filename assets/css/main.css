@@ -1273,3 +1273,28 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+.portfolio-content {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Efek timbul lebih kuat saat hover */
+.portfolio-content:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Untuk memastikan gambar atau isi di dalamnya tidak menempel tepi */
+.portfolio-content img {
+  border-radius: 15px 15px 0 0;
+  width: 100%;
+  height: auto;
+}
+
+.portfolio-content .portfolio-info {
+  padding: 15px 20px;
+}

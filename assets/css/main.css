@@ -1298,3 +1298,24 @@ section,
 .portfolio-content .portfolio-info {
   padding: 15px 20px;
 }
+
+
+.web-portofolio {
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.web-portofolio:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.web-portofolio img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 15px;
+  transition: transform 0.3s ease;
+}

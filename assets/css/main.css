@@ -549,7 +549,7 @@ section,
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
-  min-height: 40vh; /* Sedikit ditinggikan agar lega */
+  min-height: 30vh; /* Sedikit ditinggikan agar lega */
   position: relative;
   padding: 60px 0;
   display: flex;
@@ -1419,79 +1419,101 @@ section,
   100% { transform: rotate(360deg); }
 }
 
-/*--------------------------------------------------------------
-# Linux Terminal Style (Ubuntu Vibes)
---------------------------------------------------------------*/
-.terminal-window {
-  background-color: #300a24; /* Warna Ungu Gelap khas Ubuntu Terminal */
-  /* Atau gunakan #1e1e1e jika ingin hitam polos */
-  color: #fff;
-  border-radius: 6px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.6); /* Shadow lebih dramatis */
+/* --- macOS Terminal Style --- */
+.macos-terminal {
+  background-color: #1e1e1e; /* Warna Background Gelap */
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
   width: 100%;
-  max-width: 900px; /* PENTING: Agar tidak terlalu lebar di layar besar */
-  margin: 0 auto;   /* Posisi tengah horizontal */
-  overflow: hidden;
-  font-family: 'Ubuntu Mono', 'Courier New', monospace; /* Font Linux */
-  font-size: 15px;
+  max-width: 900px; /* Lebar maksimal agar proporsional */
+  margin: 30px auto; /* Posisi tengah */
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
   text-align: left;
-  border: 1px solid #451e3e; /* Border tipis */
+  overflow: hidden;
+  border: 1px solid #333;
 }
 
+/* Header (Bar Atas) */
 .terminal-header {
-  background-color: #3e3e3e; /* Warna Header Abu Gelap */
-  background: linear-gradient(to bottom, #4a4a4a, #3e3e3e);
-  padding: 8px 15px;
+  background: #2d2d2d; /* Abu-abu header */
+  padding: 12px 15px;
   display: flex;
-  justify-content: space-between; 
   align-items: center;
-  border-bottom: 1px solid #1e1e1e;
+  position: relative;
+  border-bottom: 1px solid #333;
 }
+
+.terminal-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.red { background-color: #ff5f56; }
+.yellow { background-color: #ffbd2e; }
+.green { background-color: #27c93f; }
 
 .terminal-title {
-  color: #ddd;
-  font-size: 13px;
-  font-weight: bold;
-  letter-spacing: 0.5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  color: #999;
+  font-size: 12px;
+  font-weight: 500;
+  pointer-events: none; /* Agar tidak menghalangi klik */
 }
 
-.terminal-controls {
-  display: flex;
-  gap: 6px;
-}
-
-.terminal-button {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.2);
-}
-
-/* Warna Tombol Khas Window Linux */
-.close { background-color: #e95420; } /* Orange Ubuntu */
-.minimize { background-color: #777; }
-.maximize { background-color: #777; }
-
+/* Body (Isi) */
 .terminal-body {
-  background-color: #1e1e1e; /* Menyamakan dengan window background */
   padding: 20px;
-  min-height: 350px; /* Tinggi minimal agar tidak gepeng */
+  min-height: 280px; /* Tinggi minimal */
+  color: #fff;
 }
 
-/* Warna Text Update */
-.prompt { color: #8ae234; margin-right: 8px; font-weight: bold; } /* Hijau Terang */
-.text-green { color: #8ae234; }
-.text-yellow { color: #fce94f; }
-.text-package { color: #dacbcb; margin-left: 20px; }
+.terminal-line {
+  margin-bottom: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
 
-/* Cursor Effect */
-.cursor {
+/* Warna & Text Style */
+.prompt { 
+  color: #ffbd2e; /* Warna Prompt Kuning/Emas */
+  margin-right: 10px; 
+  font-weight: bold;
+}
+
+/* Ganti nama class agar tidak bentrok dengan Bootstrap */
+.text-dim { 
+  color: #0ea300 !important; /* Merah (Sesuai request Anda) */
+  font-weight: bold;
+} 
+
+.text-green { color: #27c93f; margin-right: 5px; }
+.text-yellow { color: #ffbd2e; }
+.link-highlight { color: #4da6ff; text-decoration: none; border-bottom: 1px dashed #4da6ff; }
+
+.output-row { margin-bottom: 4px; }
+.indent { margin-left: 25px; }
+.hidden { display: none; }
+
+/* Cursor Kedip */
+.cursor-blink {
   display: inline-block;
   width: 8px;
   height: 16px;
-  background-color: #fff;
+  background-color: #ccc;
   animation: blink 1s infinite;
-  vertical-align: middle;
+  vertical-align: text-bottom;
   margin-left: 2px;
 }
 
@@ -1500,4 +1522,8 @@ section,
   50% { opacity: 0; }
 }
 
-.hidden { display: none; }
+/* Responsif Mobile */
+@media (max-width: 768px) {
+  .macos-terminal { max-width: 100%; border-radius: 8px; }
+  .terminal-body { font-size: 12px; padding: 15px; }
+}

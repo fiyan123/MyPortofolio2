@@ -92,45 +92,56 @@
 	<main class="main">
 
 		<section id="hero" class="hero section dark-background">
-    <div class="container" data-aos="zoom-in" data-aos-delay="100">
-        
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="terminal-title">sofyan@dev: ~ (zsh)</div>
-                <div class="terminal-controls">
-                    <div class="terminal-button minimize"></div>
-                    <div class="terminal-button maximize"></div>
-                    <div class="terminal-button close"></div>
-                </div>
-            </div>
-            
-            <div class="terminal-body" id="terminalContent">
-                <div class="terminal-line">
-                    <span class="prompt">sofyan@dev:~$</span>
-                    <span class="typing-text" data-text="npm install backend-skills"></span>
-                </div>
-                
-                <div class="terminal-output hidden" id="output1">
-					<span class="text-green">✔ Installing dependencies...</span><br>
-					<span class="text-package">📦 PHP Laravel Framework</span><br>
-					<span class="text-package">📦 RESTful API Concept</span><br>
-					<span class="text-package">📦 MySQL Database Optimization</span>
+			<div class="container" data-aos="fade-up">
+				<div class="macos-terminal">
+					<div class="terminal-header">
+						<div class="terminal-buttons">
+							<span class="btn-dot red"></span>
+							<span class="btn-dot yellow"></span>
+							<span class="btn-dot green"></span>
+						</div>
+						<div class="terminal-title">sofyan@dev: ~/portofolio</div>
+					</div>
+
+					<div class="terminal-body" id="terminalContent">
+						<div class="terminal-line">
+							<span class="prompt">sofyan@dev:~$</span>
+							<span class="typing-text" id="type1"></span>
+						</div>
+						
+						<div class="terminal-output hidden" id="output1">
+							<div class="output-row"><span class="text-green">✔</span> Checking environment...</div>
+							<div class="output-row"><span class="text-green">✔</span> Installing backend-dependencies...</div>
+							<div class="output-row indent"><span class="text-dim">📦 Laravel Framework</span></div>
+							<div class="output-row indent"><span class="text-dim">📦 CodeIgniter Framework</span></div>
+							<div class="output-row indent"><span class="text-dim">📦 PHP</span></div>
+							<div class="output-row indent"><span class="text-dim">📦 RESTful API Architecture</span></div>
+							<div class="output-row indent"><span class="text-dim">📦 MySQL & Database Optimization</span></div>
+							<div class="output-row indent"><span class="text-dim">📦 PostgreSQL & Database Optimization</span></div>
+							<div class="output-row"><span class="text-green">Done in 1.45s.</span></div>
+						</div>
+
+						<div class="terminal-line hidden" id="line2">
+							<span class="prompt">sofyan@dev:~$</span>
+							<span class="typing-text" id="type2"></span>
+						</div>
+
+						<div class="terminal-output hidden" id="output2">
+							<div class="output-row">
+								<span class="text-yellow">✉ Opening mail client...</span>
+							</div>
+							<div class="output-row">
+								Target: <a href="mailto:emailanda@gmail.com" class="link-highlight">moehamadsofyan@gmail.com</a>
+							</div>
+						</div>
+
+						<div class="terminal-line hidden" id="lineEnd">
+							<span class="prompt">sofyan@dev:~$</span><span class="cursor-blink"></span>
+						</div>
+					</div>
 				</div>
-
-                <div class="terminal-line hidden" id="line2">
-                    <span class="prompt">sofyan@dev:~$</span>
-                    <span class="typing-text" data-text="contact --email"></span>
-                </div>
-                
-                <div class="terminal-output hidden" id="output2">
-                    <span class="text-yellow">✉ sending email to...</span><br>
-                    <a href="mailto:emailanda@gmail.com" style="color: #4da6ff;">emailanda@gmail.com</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</section>
+			</div>
+		</section>
 		
 		<!-- modal cv -->
 		<div class="modal fade" id="modalCV" tabindex="-1" aria-labelledby="modalCVLabel" aria-hidden="true">
@@ -704,6 +715,79 @@
 
 	<!-- Main JS File -->
 	<script src="assets/js/main.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			
+			// Konfigurasi Teks yang akan diketik
+			const commands = [
+				{ id: 'type1', text: 'npm install backend-skills' },
+				{ id: 'type2', text: 'contact --email' }
+			];
+			
+			// Status agar animasi hanya jalan 1 kali
+			let hasStarted = false;
+
+			// Fungsi mengetik efek ketikan
+			async function typeEffect(elementId, text, speed = 60) {
+				const element = document.getElementById(elementId);
+				// Tambah cursor sementara saat mengetik
+				element.style.borderRight = "8px solid #ccc"; 
+				
+				for (let i = 0; i < text.length; i++) {
+					element.textContent += text.charAt(i);
+					await new Promise(r => setTimeout(r, speed));
+				}
+				
+				// Hilangkan cursor setelah selesai ngetik
+				element.style.borderRight = "none";
+			}
+
+			// Logika Utama Terminal
+			async function startTerminal() {
+				if (hasStarted) return; // Cegah jalan 2 kali
+				hasStarted = true;
+
+				// 1. Ketik Command Pertama
+				await typeEffect('type1', commands[0].text);
+				await new Promise(r => setTimeout(r, 500)); // Loading sebentar
+				
+				// Tampilkan Output 1
+				document.getElementById('output1').classList.remove('hidden');
+				
+				// 2. Jeda sebelum baris kedua
+				await new Promise(r => setTimeout(r, 1200));
+				document.getElementById('line2').classList.remove('hidden');
+				
+				// 3. Ketik Command Kedua
+				await typeEffect('type2', commands[1].text);
+				await new Promise(r => setTimeout(r, 500));
+				
+				// Tampilkan Output 2 & Baris Akhir
+				document.getElementById('output2').classList.remove('hidden');
+				document.getElementById('lineEnd').classList.remove('hidden');
+			}
+
+			// --- OPTIMASI KINERJA (Intersection Observer) ---
+			// Script hanya akan jalan jika terminal terlihat di layar user
+			let observer = new IntersectionObserver((entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						startTerminal();
+						observer.unobserve(entry.target); // Stop memantau setelah jalan
+					}
+				});
+			}, { threshold: 0.3 }); // Jalan ketika 30% terminal terlihat
+
+			// Mulai memantau elemen terminal
+			const terminal = document.querySelector('.macos-terminal');
+			if (terminal) {
+				observer.observe(terminal);
+			} else {
+				// Fallback jika class tidak ditemukan (langsung jalan)
+				startTerminal();
+			}
+		});
+	</script>
 </body>
 
 </html>
